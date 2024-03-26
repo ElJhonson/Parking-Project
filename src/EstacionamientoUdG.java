@@ -405,11 +405,6 @@ public class EstacionamientoUdG extends javax.swing.JFrame {
         B43.setText("1");
         B43.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         B43.setContentAreaFilled(false);
-        B43.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                B43ActionPerformed(evt);
-            }
-        });
         jPanel1.add(B43, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 450, -1, -1));
 
         B44.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
@@ -417,11 +412,6 @@ public class EstacionamientoUdG extends javax.swing.JFrame {
         B44.setText("2");
         B44.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         B44.setContentAreaFilled(false);
-        B44.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                B44ActionPerformed(evt);
-            }
-        });
         jPanel1.add(B44, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 450, -1, -1));
 
         B45.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
@@ -576,15 +566,8 @@ public class EstacionamientoUdG extends javax.swing.JFrame {
         this.setVisible(false);
         InterfaceParking iP = new InterfaceParking();
         iP.setVisible(true);
+        
     }//GEN-LAST:event_BVolverActionPerformed
-
-    private void B43ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B43ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_B43ActionPerformed
-
-    private void B44ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B44ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_B44ActionPerformed
 
     public static void main(String args[]) {
 
