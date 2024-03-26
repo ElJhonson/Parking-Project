@@ -12,6 +12,10 @@ public class EstacionamientoUdG extends javax.swing.JFrame {
     String archivo = System.getProperty("user.dir") + "/personalRegistro.jhonson";
     Estacionamiento[] lugares = new Estacionamiento[54];
     JButton[] botones;
+    Encontrado encontrado;
+    
+    String nombre, apellido, cargo, marca, placas;
+    int lugar;
 
     ImageIcon[] vehiculos = new ImageIcon[]{
         new ImageIcon(getClass().getResource("/img/coche.png")),
@@ -24,6 +28,13 @@ public class EstacionamientoUdG extends javax.swing.JFrame {
     public EstacionamientoUdG() {
         setTitle("Estacionamiento UdG");
         initComponents();
+        this.botones = new JButton[]{
+            B1, B2, B3, B4, B5, B6, B7, B8, B9, B10, B11, B12, B13, B14,
+            B15, B16, B17, B18, B19, B20, B21, B22, B23, B24, B25, B26,
+            B27, B28, B29, B30, B31, B32, B33, B34, B35, B36, B37, B38,
+            B39, B40, B41, B42, B43, B44, B45, B46, B47, B48, B49, B50,
+            B51, B52, B53, B54
+        };
         initBotones();
         this.setLocationRelativeTo(null);
     }
@@ -566,7 +577,7 @@ public class EstacionamientoUdG extends javax.swing.JFrame {
         this.setVisible(false);
         InterfaceParking iP = new InterfaceParking();
         iP.setVisible(true);
-        
+
     }//GEN-LAST:event_BVolverActionPerformed
 
     public static void main(String args[]) {
@@ -647,7 +658,6 @@ public class EstacionamientoUdG extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void ventanaEncontrado() {
-        Encontrado encontrado = new Encontrado();
         encontrado.setVisible(true);
 
     }
@@ -660,14 +670,6 @@ public class EstacionamientoUdG extends javax.swing.JFrame {
 
     private void initBotones() {
         lugares = (Estacionamiento[]) Archivero.leer(archivo);
-
-        this.botones = new JButton[]{
-            B1, B2, B3, B4, B5, B6, B7, B8, B9, B10, B11, B12, B13, B14,
-            B15, B16, B17, B18, B19, B20, B21, B22, B23, B24, B25, B26,
-            B27, B28, B29, B30, B31, B32, B33, B34, B35, B36, B37, B38,
-            B39, B40, B41, B42, B43, B44, B45, B46, B47, B48, B49, B50,
-            B51, B52, B53, B54
-        };
 
         for (int i = 0; i < lugares.length; i++) {
 
@@ -695,11 +697,21 @@ public class EstacionamientoUdG extends javax.swing.JFrame {
             } else {
                 indexV = 2;
             }
+
             botones[indice].setText("");
             botones[indice].setIcon(vehiculos[indexV]);
             botones[indice].addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    encontrado = new Encontrado();
+                    nombre = lugares[indice].getAuto().getConductor().getNombre();
+                    apellido = lugares[indice].getAuto().getConductor().getApellido();
+                    cargo = lugares[indice].getAuto().getConductor().getCargo();
+                    marca = lugares[indice].getAuto().getMarca();
+                    placas = lugares[indice].getAuto().getPlacas();
+                    lugar = lugares[indice].getLugar();
+
+                    encontrado.showInfo(indice, nombre, apellido, cargo, marca, placas, lugar);
                     ventanaEncontrado();
                 }
             });
