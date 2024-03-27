@@ -108,6 +108,7 @@ public class EstacionamientoUdG extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         BVolver = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -553,6 +554,14 @@ public class EstacionamientoUdG extends javax.swing.JFrame {
         });
         jPanel1.add(BVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, 40, 40));
 
+        jButton1.setText("ver");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 20, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -579,6 +588,11 @@ public class EstacionamientoUdG extends javax.swing.JFrame {
         iP.setVisible(true);
 
     }//GEN-LAST:event_BVolverActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        LlegadaSalida ls = new LlegadaSalida();
+        ls.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public static void main(String args[]) {
 
@@ -645,6 +659,7 @@ public class EstacionamientoUdG extends javax.swing.JFrame {
     private javax.swing.JButton B8;
     private javax.swing.JButton B9;
     private javax.swing.JButton BVolver;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

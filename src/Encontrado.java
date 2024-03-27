@@ -1,12 +1,18 @@
 
 import com.jhonson.parking.models.Archivero;
+import com.jhonson.parking.models.Auto;
+import com.jhonson.parking.models.Conductor;
 import com.jhonson.parking.models.Estacionamiento;
+import java.util.ArrayList;
 
 public final class Encontrado extends javax.swing.JFrame {
 
     String archivo = System.getProperty("user.dir") + "/personalRegistro.jhonson";
+    String archivoMov = System.getProperty("user.dir") + "/movimientos.jhonson";
     Estacionamiento[] lugares = new Estacionamiento[54];
+    ArrayList<Estacionamiento> movimientos = new ArrayList();
 
+    int indice = 0;
 
     public Encontrado() {
         initComponents();
@@ -30,7 +36,7 @@ public final class Encontrado extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        BLlegada = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         LMarca = new javax.swing.JLabel();
         LEstacionam = new javax.swing.JLabel();
@@ -98,11 +104,16 @@ public final class Encontrado extends javax.swing.JFrame {
         jLabel10.setText("No. Estacionamiento");
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 470, -1, 20));
 
-        jButton1.setBackground(new java.awt.Color(255, 51, 51));
-        jButton1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 24)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Registrar Llegada");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 550, 230, 60));
+        BLlegada.setBackground(new java.awt.Color(255, 51, 51));
+        BLlegada.setFont(new java.awt.Font("Segoe UI Emoji", 1, 24)); // NOI18N
+        BLlegada.setForeground(new java.awt.Color(255, 255, 255));
+        BLlegada.setText("Registrar Llegada");
+        BLlegada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BLlegadaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(BLlegada, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 550, 230, 60));
         jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 620, 90, 20));
 
         LMarca.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -136,6 +147,15 @@ public final class Encontrado extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_BVolverActionPerformed
 
+    private void BLlegadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BLlegadaActionPerformed
+        movimientos = (ArrayList<Estacionamiento>) Archivero.leer(archivoMov);
+        Conductor conductor = new Conductor(LNombre.getText(), LApellido.getText(), LCargo.getText());
+        Auto auto = new Auto(conductor, "", LMarca.getText(), LPlaca.getText());
+        movimientos.add(
+                new Estacionamiento(auto, Integer.parseInt(LEstacionam.getText())));
+        Archivero.escribir(archivoMov, movimientos);
+    }//GEN-LAST:event_BLlegadaActionPerformed
+
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -146,6 +166,7 @@ public final class Encontrado extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BLlegada;
     private javax.swing.JButton BVolver;
     private javax.swing.JLabel LApellido;
     private javax.swing.JLabel LCargo;
@@ -153,7 +174,6 @@ public final class Encontrado extends javax.swing.JFrame {
     private javax.swing.JLabel LMarca;
     private javax.swing.JLabel LNombre;
     private javax.swing.JLabel LPlaca;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -164,7 +184,7 @@ public final class Encontrado extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
-    
+
     public void showInfo(int indice, String nombre, String apellido, String cargo,
             String marca, String placa, int lugar) {
         if (lugares[indice] != null) {
@@ -175,5 +195,6 @@ public final class Encontrado extends javax.swing.JFrame {
             LPlaca.setText(placa);
             LEstacionam.setText(String.valueOf(lugar));
         }
-    }    
+    }
+
 }

@@ -18,6 +18,8 @@ public class Auto implements Serializable{
         this.marca = marca;
         this.placas = placas;
     }
+    
+    
 
     public Conductor getConductor() {
         return conductor;
