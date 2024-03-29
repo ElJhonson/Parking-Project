@@ -13,6 +13,7 @@ public class Registros extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         mostrarInfo();
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -203,10 +204,9 @@ public class Registros extends javax.swing.JFrame {
 
     private void mostrarRegistro() {
         DefaultTableModel datos = (DefaultTableModel) TRegistros.getModel();
-
         datos.setRowCount(0);
         for (Estacionamiento lg : lugares) {
-            if (lg.getAuto() != null) {
+            if (lg!=null && lg.getAuto() != null) {
                 Object[] renglon = lg.toArray();
                 datos.addRow(renglon);
             }

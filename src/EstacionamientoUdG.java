@@ -37,6 +37,7 @@ public class EstacionamientoUdG extends javax.swing.JFrame {
         };
         initBotones();
         this.setLocationRelativeTo(null);
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -704,7 +705,7 @@ public class EstacionamientoUdG extends javax.swing.JFrame {
 
     private void formatButtonsBusy(int indice) {
 
-        if (lugares[indice].getAuto() != null) {
+        if (lugares[indice] != null && lugares[indice].getAuto() != null) {
             if (lugares[indice].getAuto().getTipoVehiculo().equals("Coche")) {
                 indexV = 0;
             } else if (lugares[indice].getAuto().getTipoVehiculo().equals("Camioneta")) {

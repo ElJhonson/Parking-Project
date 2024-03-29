@@ -4,7 +4,9 @@ import com.jhonson.parking.models.Auto;
 import com.jhonson.parking.models.Conductor;
 import com.jhonson.parking.models.Estacionamiento;
 import com.jhonson.parking.models.Movimiento;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 public final class Encontrado extends javax.swing.JFrame {
@@ -41,6 +43,7 @@ public final class Encontrado extends javax.swing.JFrame {
         LMarca = new javax.swing.JLabel();
         LEstacionam = new javax.swing.JLabel();
         LPlaca = new javax.swing.JLabel();
+        BSalida = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -105,7 +108,7 @@ public final class Encontrado extends javax.swing.JFrame {
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 470, -1, 20));
 
         BLlegada.setBackground(new java.awt.Color(255, 51, 51));
-        BLlegada.setFont(new java.awt.Font("Segoe UI Emoji", 1, 24)); // NOI18N
+        BLlegada.setFont(new java.awt.Font("Segoe UI Emoji", 1, 20)); // NOI18N
         BLlegada.setForeground(new java.awt.Color(255, 255, 255));
         BLlegada.setText("Registrar Llegada");
         BLlegada.addActionListener(new java.awt.event.ActionListener() {
@@ -113,7 +116,7 @@ public final class Encontrado extends javax.swing.JFrame {
                 BLlegadaActionPerformed(evt);
             }
         });
-        jPanel1.add(BLlegada, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 550, 230, 60));
+        jPanel1.add(BLlegada, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 560, 200, 60));
         jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 620, 90, 20));
 
         LMarca.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -127,6 +130,17 @@ public final class Encontrado extends javax.swing.JFrame {
         LPlaca.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         LPlaca.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel1.add(LPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 410, 120, 30));
+
+        BSalida.setBackground(new java.awt.Color(0, 153, 204));
+        BSalida.setFont(new java.awt.Font("Segoe UI Emoji", 1, 20)); // NOI18N
+        BSalida.setForeground(new java.awt.Color(255, 255, 255));
+        BSalida.setText("Registrar Salida");
+        BSalida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BSalidaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(BSalida, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 560, 180, 60));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -166,12 +180,43 @@ public final class Encontrado extends javax.swing.JFrame {
         if (lugarDisponible) {
             movimientos.add(new Movimiento(conductor, auto, estacionamiento));
             Archivero.escribir(archivoMov, movimientos);
+            BSalida.setEnabled(true);
+            JOptionPane.showMessageDialog(null, "Llegada registrada con éxito");
             this.setVisible(false);
         } else {
-            JOptionPane.showMessageDialog(null, "Error en Registro: El lugar de estacionamiento ya está ocupado.");
+            JOptionPane.showMessageDialog(null, "Error\nYa fue registrado el movimiento");
             this.setVisible(false);
         }
     }//GEN-LAST:event_BLlegadaActionPerformed
+
+    private void BSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BSalidaActionPerformed
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy - HH:mm");
+        Date horaActual = new Date();
+        boolean encontrado = false;
+
+        int lugarEstacionamiento = Integer.parseInt(LEstacionam.getText());
+        movimientos = (ArrayList<Movimiento>) Archivero.leer(archivoMov);
+
+        for (Movimiento movimiento : movimientos) {
+            if (movimiento != null && movimiento.getAuto() != null) {
+                int lugarMovimiento = movimiento.getEstacionamiento().getLugar();
+                if (lugarMovimiento == lugarEstacionamiento && movimiento.getHoraSalidaF() == null) {
+                    movimiento.setHoraSalidaF(sdf.format(horaActual));
+                    encontrado = true;
+                    break;
+                }
+            }
+        }
+
+        if (encontrado) {
+            Archivero.escribir(archivoMov, movimientos);
+            JOptionPane.showMessageDialog(null, "Hora de salida registrada con éxito");
+            this.setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(null, "Error\n Ya fue registrado el movimiento");
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_BSalidaActionPerformed
 
     public static void main(String args[]) {
 
@@ -184,6 +229,7 @@ public final class Encontrado extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BLlegada;
+    private javax.swing.JButton BSalida;
     private javax.swing.JButton BVolver;
     private javax.swing.JLabel LApellido;
     private javax.swing.JLabel LCargo;

@@ -1,6 +1,5 @@
 
 import com.jhonson.parking.models.Archivero;
-import com.jhonson.parking.models.Estacionamiento;
 import com.jhonson.parking.models.Movimiento;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
