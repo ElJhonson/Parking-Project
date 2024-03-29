@@ -1,17 +1,19 @@
 
 import com.jhonson.parking.models.Archivero;
 import com.jhonson.parking.models.Estacionamiento;
+import com.jhonson.parking.models.Movimiento;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 public class LlegadaSalida extends javax.swing.JFrame {
 
     String archivoMov = System.getProperty("user.dir") + "/movimientos.jhonson";
-    ArrayList<Estacionamiento> movimientos = new ArrayList();
+    ArrayList<Movimiento> movimientos;
 
     public LlegadaSalida() {
         initComponents();
         this.setLocationRelativeTo(null);
+        movimientos = new ArrayList();
         showInfo();
     }
 
@@ -32,29 +34,29 @@ public class LlegadaSalida extends javax.swing.JFrame {
 
         TMovimientos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nombre", "Apellido", "Cargo", "Fecha", "Vehículo", "Placas", "No. Lugar"
+                "Nombre", "Apellido", "Cargo", "Marca Vehiculo", "Placas", "No. Lugar", "Llegada", "Salida"
             }
         ));
         jScrollPane1.setViewportView(TMovimientos);
@@ -89,7 +91,7 @@ public class LlegadaSalida extends javax.swing.JFrame {
                 BNuevoActionPerformed(evt);
             }
         });
-        jPanel1.add(BNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 40, -1, -1));
+        jPanel1.add(BNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 30, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 90));
 
@@ -128,7 +130,7 @@ public class LlegadaSalida extends javax.swing.JFrame {
         DefaultTableModel datos = (DefaultTableModel) TMovimientos.getModel();
 
         datos.setRowCount(0);
-        for (Estacionamiento lg : movimientos) {
+        for (Movimiento lg : movimientos) {
             if (lg != null && lg.getAuto() != null) {
                 Object[] renglon = lg.toArray();
                 datos.addRow(renglon);
@@ -137,7 +139,7 @@ public class LlegadaSalida extends javax.swing.JFrame {
     }
 
     public void showInfo() {
-        movimientos = (ArrayList<Estacionamiento>) Archivero.leer(archivoMov);
+        movimientos = (ArrayList<Movimiento>) Archivero.leer(archivoMov);
         mostrarRegistro();
     }
 }

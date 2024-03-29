@@ -3,16 +3,16 @@ import com.jhonson.parking.models.Archivero;
 import com.jhonson.parking.models.Auto;
 import com.jhonson.parking.models.Conductor;
 import com.jhonson.parking.models.Estacionamiento;
+import com.jhonson.parking.models.Movimiento;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public final class Encontrado extends javax.swing.JFrame {
 
     String archivo = System.getProperty("user.dir") + "/personalRegistro.jhonson";
     String archivoMov = System.getProperty("user.dir") + "/movimientos.jhonson";
     Estacionamiento[] lugares = new Estacionamiento[54];
-    ArrayList<Estacionamiento> movimientos = new ArrayList();
-
-    int indice = 0;
+    ArrayList<Movimiento> movimientos = new ArrayList<>();
 
     public Encontrado() {
         initComponents();
@@ -148,12 +148,29 @@ public final class Encontrado extends javax.swing.JFrame {
     }//GEN-LAST:event_BVolverActionPerformed
 
     private void BLlegadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BLlegadaActionPerformed
-        movimientos = (ArrayList<Estacionamiento>) Archivero.leer(archivoMov);
+        movimientos = (ArrayList<Movimiento>) Archivero.leer(archivoMov);
+
         Conductor conductor = new Conductor(LNombre.getText(), LApellido.getText(), LCargo.getText());
         Auto auto = new Auto(conductor, "", LMarca.getText(), LPlaca.getText());
-        movimientos.add(
-                new Estacionamiento(auto, Integer.parseInt(LEstacionam.getText())));
-        Archivero.escribir(archivoMov, movimientos);
+        Estacionamiento estacionamiento = new Estacionamiento(auto, Integer.parseInt(LEstacionam.getText()));
+
+        boolean lugarDisponible = true;
+
+        for (Movimiento mov : movimientos) {
+            if (mov.getAuto() != null && mov.getEstacionamiento().getLugar() == estacionamiento.getLugar()) {
+                lugarDisponible = false;
+                break;
+            }
+        }
+
+        if (lugarDisponible) {
+            movimientos.add(new Movimiento(conductor, auto, estacionamiento));
+            Archivero.escribir(archivoMov, movimientos);
+            this.setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(null, "Error en Registro: El lugar de estacionamiento ya está ocupado.");
+            this.setVisible(false);
+        }
     }//GEN-LAST:event_BLlegadaActionPerformed
 
     public static void main(String args[]) {

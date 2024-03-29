@@ -1,9 +1,10 @@
 package com.jhonson.parking.models;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Movimiento {
+public class Movimiento implements Serializable{
     Conductor conductor;
     Auto auto;
     Estacionamiento estacionamiento;
