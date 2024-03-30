@@ -7,10 +7,13 @@ import com.jhonson.parking.models.Movimiento;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public final class Encontrado extends javax.swing.JFrame {
 
+    ImageIcon echo = new ImageIcon(getClass().getResource("/img/cheque.png"));
+    ImageIcon error = new ImageIcon(getClass().getResource("/img/advertenciaP.png"));
     String archivo = System.getProperty("user.dir") + "/personalRegistro.jhonson";
     String archivoMov = System.getProperty("user.dir") + "/movimientos.jhonson";
     Estacionamiento[] lugares = new Estacionamiento[54];
@@ -19,6 +22,7 @@ public final class Encontrado extends javax.swing.JFrame {
     public Encontrado() {
         initComponents();
         this.setLocationRelativeTo(null);
+        movimientos = (ArrayList<Movimiento>) Archivero.leer(archivoMov);
         lugares = (Estacionamiento[]) Archivero.leer(archivo);
     }
 
@@ -180,11 +184,10 @@ public final class Encontrado extends javax.swing.JFrame {
         if (lugarDisponible) {
             movimientos.add(new Movimiento(conductor, auto, estacionamiento));
             Archivero.escribir(archivoMov, movimientos);
-            BSalida.setEnabled(true);
-            JOptionPane.showMessageDialog(null, "Llegada registrada con éxito");
+            JOptionPane.showMessageDialog(null, "Llegada registrada con éxito", "Echo", JOptionPane.WARNING_MESSAGE, echo);
             this.setVisible(false);
         } else {
-            JOptionPane.showMessageDialog(null, "Error\nYa fue registrado el movimiento");
+            JOptionPane.showMessageDialog(null, "Ya fue registrado el movimiento", "Error", JOptionPane.WARNING_MESSAGE, error);
             this.setVisible(false);
         }
     }//GEN-LAST:event_BLlegadaActionPerformed
@@ -198,22 +201,33 @@ public final class Encontrado extends javax.swing.JFrame {
         movimientos = (ArrayList<Movimiento>) Archivero.leer(archivoMov);
 
         for (Movimiento movimiento : movimientos) {
-            if (movimiento != null && movimiento.getAuto() != null) {
+            if (movimiento != null) {
                 int lugarMovimiento = movimiento.getEstacionamiento().getLugar();
-                if (lugarMovimiento == lugarEstacionamiento && movimiento.getHoraSalidaF() == null) {
-                    movimiento.setHoraSalidaF(sdf.format(horaActual));
-                    encontrado = true;
-                    break;
+                if (lugarMovimiento == lugarEstacionamiento) {
+                    if (movimiento.getHoraLlegadaF() != null) {
+                        if (movimiento.getHoraSalidaF() == null) {
+                            movimiento.setHoraSalidaF(sdf.format(horaActual));
+                            encontrado = true;
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Ya se ha registrado el movimiento", "Error", JOptionPane.WARNING_MESSAGE, error);
+                            this.setVisible(false);
+                            return;
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "La hora de llegada no ha sido registrada", "Error", JOptionPane.WARNING_MESSAGE, error);
+                        this.setVisible(false);
+                        return;
+                    }
                 }
             }
         }
 
         if (encontrado) {
             Archivero.escribir(archivoMov, movimientos);
-            JOptionPane.showMessageDialog(null, "Hora de salida registrada con éxito");
+            JOptionPane.showMessageDialog(null, "Hora de salida registrada con éxito", "Echo", JOptionPane.WARNING_MESSAGE, echo);
             this.setVisible(false);
         } else {
-            JOptionPane.showMessageDialog(null, "Error\n Ya fue registrado el movimiento");
+            JOptionPane.showMessageDialog(null, "Registra primero la hora de llegada", "Error", JOptionPane.WARNING_MESSAGE, error);
             this.setVisible(false);
         }
     }//GEN-LAST:event_BSalidaActionPerformed

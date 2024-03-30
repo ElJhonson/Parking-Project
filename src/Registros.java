@@ -1,6 +1,7 @@
 
 import com.jhonson.parking.models.Archivero;
 import com.jhonson.parking.models.Estacionamiento;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -13,7 +14,7 @@ public class Registros extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         mostrarInfo();
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -165,16 +166,28 @@ public class Registros extends javax.swing.JFrame {
     }//GEN-LAST:event_BNuevoActionPerformed
 
     private void BBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BBorrarActionPerformed
+        ImageIcon echo = new ImageIcon(getClass().getResource("/img/cheque.png"));
+        ImageIcon error = new ImageIcon(getClass().getResource("/img/advertenciaP.png"));
+
+        lugares = (Estacionamiento[]) Archivero.leer(archivo);
         int numBorrar = (int) SNBorrar.getValue();
-        for (int l = 0; l < lugares.length; l++) {
-            if (lugares[l].getLugar() == numBorrar) {
-                lugares[l] = new Estacionamiento();
-                JOptionPane.showMessageDialog(null, "Borrado con éxito");
+        boolean encontrado = false;
+        
+        for (int i = 0; i < lugares.length; i++) {
+            if(lugares[i].getAuto()!=null && lugares[i].getLugar()==numBorrar){
+                lugares[i] = new Estacionamiento();
+                encontrado = true;
                 break;
             }
         }
-        Archivero.escribir(archivo, lugares);
-        mostrarRegistro();
+
+        if(encontrado){
+            Archivero.escribir(archivo, lugares);
+            mostrarRegistro();
+             JOptionPane.showMessageDialog(null, "Registro Borrado con éxito", "Echo", JOptionPane.WARNING_MESSAGE, echo);
+        }else{
+             JOptionPane.showMessageDialog(null, "Regiistro No Encontrado", "Error", JOptionPane.WARNING_MESSAGE, error);
+        }
 
     }//GEN-LAST:event_BBorrarActionPerformed
 
@@ -206,7 +219,7 @@ public class Registros extends javax.swing.JFrame {
         DefaultTableModel datos = (DefaultTableModel) TRegistros.getModel();
         datos.setRowCount(0);
         for (Estacionamiento lg : lugares) {
-            if (lg!=null && lg.getAuto() != null) {
+            if (lg != null && lg.getAuto() != null) {
                 Object[] renglon = lg.toArray();
                 datos.addRow(renglon);
             }

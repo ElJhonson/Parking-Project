@@ -1,9 +1,12 @@
 
 import com.jhonson.parking.models.*;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class RegistroEstacionamiento extends javax.swing.JFrame {
 
+    ImageIcon echo = new ImageIcon(getClass().getResource("/img/cheque.png"));
+    ImageIcon error = new ImageIcon(getClass().getResource("/img/advertenciaP.png"));
     String archivo = System.getProperty("user.dir") + "/personalRegistro.jhonson";
     Estacionamiento[] lugares = new Estacionamiento[54];
     Conductor conductor;
@@ -156,7 +159,7 @@ public class RegistroEstacionamiento extends javax.swing.JFrame {
     private void BRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BRegistrarActionPerformed
         Archivero.leer(archivo);
         lugares = (Estacionamiento[]) Archivero.leer(archivo);
-        
+
         String nombre = TFNombre.getText();
         String apellido = TFApellido.getText();
         String cargo = TFCargo.getText();
@@ -172,16 +175,15 @@ public class RegistroEstacionamiento extends javax.swing.JFrame {
                 && !nPlaca.isBlank()) {
             conductor = new Conductor(nombre, apellido, cargo);
             auto = new Auto(conductor, tVehiculo, marca, nPlaca);
-            lugares[nEsta-1] = new Estacionamiento(auto, nEsta);
+            lugares[nEsta - 1] = new Estacionamiento(auto, nEsta);
             Archivero.escribir(archivo, lugares);
-            JOptionPane.showMessageDialog(null, "Registro exitoso");
+            JOptionPane.showMessageDialog(null, "Datos registrados correctamente", "Echo", JOptionPane.WARNING_MESSAGE, echo);
         } else {
-            JOptionPane.showMessageDialog(null, "Error\nLlena los datos solicitados");
+            JOptionPane.showMessageDialog(null, "Llena los datos solicitados", "Error", JOptionPane.WARNING_MESSAGE, error);
         }
         limpiarCampos();
 
     }//GEN-LAST:event_BRegistrarActionPerformed
-
 
     public static void main(String args[]) {
 
@@ -217,8 +219,8 @@ public class RegistroEstacionamiento extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
-    
-    private void limpiarCampos(){
+
+    private void limpiarCampos() {
         TFNombre.setText("");
         TFApellido.setText("");
         TFCargo.setText("");
